@@ -11,6 +11,10 @@ This extension provides support for loading and visualizing **LDR** / **HDR** im
 
 </br>
 
+> ⚠ If you hit any problems or want to request a feature, please create an [issue on the repo](https://github.com/mcrescas/veriv).
+
+</br>
+
 ![Teaser](https://github.com/mcrescas/veriv/raw/master/images/teaser.png "Teaser")
 
 ## Currently supported formats
