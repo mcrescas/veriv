@@ -19,8 +19,10 @@ This extension provides support for loading and visualizing **LDR** / **HDR** im
 
 ## Currently supported formats
   * `.exr` - High dynamic-range **(HDR)** image file format.
-  * `.png` - Low dynamic-range image without compression.
+  * `.png` - Low dynamic-range image without compression (including animated ones).
   * `.jpg` - Low dynamic-range image with compression.
+  * `.bmp` - Bitmap digital images.
+  * `.gif` - Graphics Interchange Format (animation).
 
 ## How to use it
 
