@@ -2,15 +2,15 @@
 
 <br>
 
-<center>
+<p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=mcrespo.veriv"><img src="https://img.shields.io/badge/Extension%20Page-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white"></a>
-</center>
+</p>
 
-<center>
+<p align="center">
   <img src="https://vsmarketplacebadges.dev/version-short/mcrespo.veriv.svg">
   <img src="https://vsmarketplacebadges.dev/installs-short/mcrespo.veriv.svg">
   <img src="https://vsmarketplacebadges.dev/downloads-short/mcrespo.veriv.svg">
-</center>
+</p>
 
 <br>
 
