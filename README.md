@@ -1,5 +1,19 @@
 # `VERIV` - `V`scode `E`xtended `R`ange `I`maging `V`iewer!
 
+<br>
+
+<center>
+  <a href="https://marketplace.visualstudio.com/items?itemName=mcrespo.veriv"><img src="https://img.shields.io/badge/Extension%20Page-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white"></a>
+</center>
+
+<center>
+  <img src="https://vsmarketplacebadges.dev/version-short/mcrespo.veriv.svg">
+  <img src="https://vsmarketplacebadges.dev/installs-short/mcrespo.veriv.svg">
+  <img src="https://vsmarketplacebadges.dev/downloads-short/mcrespo.veriv.svg">
+</center>
+
+<br>
+
 This extension provides support for loading and visualizing **LDR** / **HDR** images directly inside Vscode. Apart from that, the viewer contains more useful features than the native one included by default:
 
 * Translation and smooth zooming inside the image, allowing to see pixel values.
