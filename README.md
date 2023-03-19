@@ -14,14 +14,16 @@
 
 <br>
 
-This extension provides support for loading and visualizing **LDR** / **HDR** images directly inside Vscode. Apart from that, the viewer contains more useful features than the native one included by default:
+This extension provides support for loading and visualizing **LDR** / **HDR** *(animated)* images directly inside Vscode. Apart from that, the viewer contains more useful features than the native one included by default:
 
 * Translation and smooth zooming inside the image, allowing to see pixel values.
-* Control for adjusting exposure.
+* Control for adjusting exposure and gamma.
 * Different tone mapping possibilities: sRGB, inverse gamma, positive/negative color, and false color visualization.
 * Possibility of comparing different images using a specified error metric (Error, Absolute error, Squared Error, Relative Absolute Error, or Relative Squared Error).
-* Reloading images is also supported (for `.exr` files).
+* Displays the histogram of the image (or the histogram of the error metric).
+* Reloading images is also supported.
 * Playing the images as a video depending on the user selection of `FPS` (Frames per second).
+* Right-click menu entry for opening all the images in a folder.
 
 </br>
 
