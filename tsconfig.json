@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		// "module": "commonjs",
+		"module" : "Preserve",
+		"target": "ES2020",
+		"lib": ["ES2019", "DOM"],
+		"outDir": "out",
+		"sourceMap": true,
+		"strict": true,
+		"rootDir": "src",
+		"typeRoots": ["./src/types", "./node_modules/@types"],
+		"moduleResolution": "bundler",
+	},
+	"exclude": ["node_modules", ".vscode-test"]
+}

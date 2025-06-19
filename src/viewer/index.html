@@ -1,0 +1,366 @@
+	<div id="sidebar" class="sidebar">
+		<div id="content-sidebar" class="content-sidebar">
+			<div>
+				<div class="header-sidebar">
+					<div class="title-icon-sidebar">
+						<img src="${iconURI}" alt="VERIV" class="logo-sidebar">
+						<span class="title-sidebar">VERIV</span>
+					</div>
+					<button id="toggle-sidebar-sidebar" class="toggle-btn-sidebar" title="Close sidebar"></button>
+				</div>
+				<div id="histogram-space-sidebar" class="histogram-space-sidebar">
+					<canvas id="histogram-sidebar" height="7rem" style="border: gray 1px solid; border-radius: 5px;"></canvas>
+				</div>
+				<div class="histogram-text-container-sidebar">
+					<div style="width: 33%">
+						<span id="min-val-sidebar"> - </span>
+					</div>
+					<div style="width: 33%; text-align: center">
+						<span id="mean-val-sidebar"> - </span>
+					</div>
+					<div style="width: 33%; text-align: right">
+						<span id="max-val-sidebar"> - </span>
+					</div>
+				</div>
+			</div>
+			<div id="info-bar-sidebar" class="info-bar-sidebar">
+			</div>
+			<div class="video-controls-sidebar">
+				<label for="fps-input" style="margin-left: 0.5rem; user-select: none;"> FPS: </label>
+				<input type="text" id="fps-input-sidebar" name="fps-input" class="input-video" size="4">
+				<label class="video_status" id="video_button-sidebar"> ▶ </label>
+			</div>
+			<div id="dragHandle"></div>
+		</div>
+	</div>
+	<div id="content" class="content" style="width: 100vw; height: 100vh; overflow: hidden;">
+		<div id="canvas-space" class="canvas">
+			<canvas id="renderer" width="100vw" height="95vh" style="position: absolute;"></canvas>
+			<canvas id="renderer2" width="100vw" height="95vh" style="position: absolute; z-index: 5;"></canvas>	
+		</div>
+		<div id="status-bar" class="status-bar">
+			<div class="status-element">
+				<div id="info-channels-bar" class="info-bar"></div>
+			</div>
+			<div id="image-list" class="status-element min-size">
+				<div id="sidebar-button-container" class="sidebar-button-container">
+					<button id="toggle-sidebar-list" class="toggle-btn" title="Open sidebar"></button>
+				</div>
+				<div id="info-bar" class="info-bar"></div>
+				<div style="display: flex; align-items: center; margin-left: auto;">
+					<label for="fps-input" style="margin-left: 0.5rem; user-select: none;"> FPS: </label>
+					<input type="text" id="fps-input" name="fps-input" class="input-video" size="4">
+					<label class="video_status" id="video_button"> ▶ </label>
+				</div>
+			</div>
+		</div>
+
+		<div id="histogram-container" class="tp-dfwv" style="left: 8px; display: none;">
+			<div id="histogram_window" class="tp-rotv tp-cntv tp-rotv-cpl">
+				<button id="histogram-title" class="tp-rotv_b">
+					<div class="tp-rotv_t"> Histogram </div>
+					<div class="tp-rotv_m"></div>
+				</button>
+				<div class="tp-rotv_i"></div>
+				<div class="tp-rotv_c" style="height: auto;">
+					<div class="tp-lblv tp-v-fst tp-v-vfst">
+						<canvas id="histogram" width="235rem" height="100rem" style="border: gray 1px solid; border-radius: 5px; margin-left: auto; margin-right: auto;"></canvas>
+					</div>
+					<div class="tp-lblv tp-v-fst tp-v-vfst">
+						<div style="width: 33%">
+							<span id="min-val"> - </span>
+						</div>
+						<div style="width: 33%; text-align: center">
+							<span id="mean-val"> - </span>
+						</div>
+						<div style="width: 33%; text-align: right">
+							<span id="max-val"> - </span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+	<div id="modal_help" class="modal-window">
+		<div class="modal-div">
+		  <a href="#" title="Close" class="modal-close">Press <em>Escape</em> or <em>H</em> to close</a>
+		  <h1 style="margin-bottom: 0.25rem;"> VERIV - Vscode Extended Range Imaging Viewer! </h1>
+		  <h4 style="margin-top: 0.25rem;"> Version ${{VERSION}} by Miguel Crespo </h4>
+
+		  <div class="introduction-text" style="margin-top: 2rem;">
+			<p>
+			  Once you open an image, the viewer window will remain open, allowing you to view all subsequent images in the same place. Simply open new images in VSCode, and they will appear in the existing viewer — no need to close or reopen it.
+			</p>
+			<p>
+			  When you select an image as a reference and then choose an active image to compare, the viewer will display the error computation between them. This includes the pixel values based on the currently selected error metric.
+			</p>
+			<p>
+			  Zooming in on a pixel will display its value directly on top of the corresponding pixel. Large values are shown using scientific notation. Additionally, hovering over any pixel will reveal its coordinates and current value.
+			</p>
+			<p>
+			  For viewing the loaded images as a video, enter the desired number of frames per second (FPS), then press <em>Space</em> or click the play button. Pressing it again will toggle playback on or off.
+			</p>
+		  </div>
+
+		<div class="flex-container">
+			<div>
+				<center>
+				<table class="styled-table">
+					<caption>Keybindings</caption>
+					<tr>
+						<td>Toggle Sidebar</td>
+						<td>
+							<div class="key">
+								<span>s</span>
+								<span>S</span>
+								<span>Click button</span>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>Translate Image</td>
+						<td>
+							<div class="key">
+								<span>Click & Drag</span>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>Zoom In/Out</td>
+						<td>
+							<div class="key">
+								<span>Scroll</span>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>Increase exposure</td>
+						<td>
+							<span class="key">
+								<span>e</span>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Decrease exposure</td>
+						<td>
+							<span class="key">
+								<span>Shift + e</span>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Fit image to viewport</td>
+						<td>
+							<div class="key">
+								<span>f</span>
+								<span>F</span>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>Select image</td>
+						<td>
+							<span class="key">
+								<span>1 .. 9</span>
+								<span>←↑/↓→</span>
+								<span>Click tab</span>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Select channel group</td>
+						<td>
+							<span class="key">
+								<span>Shift + ←↑/↓→</span>
+								<span>Click tab</span>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Cycle through images</td>
+						<td>
+							<span class="key">
+								<span>Tab</span>
+								<span>Shift + Tab</span>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Select image for reference (computing error)</td>
+						<td>
+							<span class="key">
+								<span>Shift + 1 .. 9</span>
+								<span>Shift + Click tab</span>
+								<span>Right-click tab</span>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Reset Parameters</td>
+						<td>
+							<span class="key">
+								<span>r</span>
+								<span>R</span>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Reload Image</td>
+						<td>
+							<span class="key">
+								<span>l</span>
+								<span>L</span>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Toggle video visualization</td>
+						<td>
+							<span class="key">
+								<span>Space</span>
+								<span>Click button</span>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Toggle GUI</td>
+						<td>
+							<span class="key">
+								<span>t</span>
+								<span>T</span>
+								<span>Click title</span>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Toggle Histogram window</td>
+						<td>
+							<span class="key">
+								<span>d</span>
+								<span>D</span>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Toggle Pixel Info</td>
+						<td>
+							<span class="key">
+								<span>Click section</span>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Close current image</td>
+						<td>
+							<span class="key">
+								<span>q</span>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Close all images</td>
+						<td>
+							<span class="key">
+								<span>Shift + q</span>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Show Help</td>
+						<td>
+							<span class="key">
+								<span>h</span>
+								<span>H</span>
+								<span>?</span>
+							</span>
+						</td>
+					</tr>
+					</tr>
+				</table>
+				</br>
+				</center>
+			</div>
+			<div class="text-tutorial">				
+				<center>
+				<table class="styled-table" style="margin-bottom: 1rem;">
+					<caption>Tonemapping</caption>
+					<tr>
+						<td>sRGB</td>
+						<td>Linear to sRGB conversion</td>
+					</tr>
+					<tr>
+						<td>Gamma</td>
+						<td>Inverse gamma correction</td>
+					</tr>
+					<tr>
+						<td>+/-</td>
+						<td>Positive (green) / Negative (red) visualization</td>
+					</tr>
+					<tr>
+						<td>False color (0, +∞)</td>
+						<td>Color visualization mapping only the positive domain</td>
+					</tr>
+
+					<tr>
+						<td>False color (-∞, +∞)</td>
+						<td>Color visualization mapping both negatives and positives. <br> Note that it is symmetric, meaning values at zero would be represented with the middle color in the color map</td>
+					</tr>
+
+					<tr>
+						<td>False color (+/-)</td>
+						<td>Divergent color map used to visualize positive and negative values</td>
+					</tr>
+				</table>
+
+				<p class="p-info">
+					When normalization of the color map is enabled, the range will be normalized to the minimum and maximum quantiles (0.01, 0.99) of the current images loaded in the viewer.
+				</p>
+				<p class="p-info">
+					This behavior is the same when visualizing the error, but in this case the normalization range will be computed across all images given the current reference one.
+				</p>
+				<br><br>
+
+				<table class="styled-table" style="margin-bottom: 1rem;">
+					<caption>Error metric</caption>
+					<tr>
+						<td>Error</td>
+						<td>i - r</td>
+					</tr>
+					<tr>
+						<td>Abs Error</td>
+						<td>|i - r|</td>
+					</tr>
+					<tr>
+						<td>Sqr Error</td>
+						<td>(i - r)²</td>
+					</tr>
+					<tr>
+						<td>Rel Abs Error</td>
+						<td>|i - r| / (r + 0.01)</td>
+					</tr>
+					<tr>
+						<td>Rel Sqr Error</td>
+						<td>(i - r)² / (r² + 0.01)</td>
+					</tr>
+				</table>
+				<div style="color: #1f1f1f;">
+					Lucy ♥ u
+				</div>
+				</center>
+			</div>
+			</div>
+
+			<center>
+			<div>
+				Developed using amazing open source technologies!
+			</div>
+			<div>
+				👉 <a href="https://github.com/mcrescas/veriv">Report any bug/feature request here.</a>
+			</div>
+			</center>
+		</div>
+	</div>

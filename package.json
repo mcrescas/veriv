@@ -1,0 +1,236 @@
+{
+	"name": "veriv",
+	"displayName": "VERIV",
+	"description": "Visualize LDR & HDR images with zooming, dragging, exposure, pixel info, error metrics, and colormap controls.",
+	"version": "1.1.0",
+	"publisher": "mcrespo",
+	"author": {
+		"email": "dev@mcrespo.me",
+		"name": "Miguel Crespo",
+		"url": "https://mcrespo.me"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mcrescas/veriv"
+	},
+	"private": true,
+	"license": "MIT",
+	"main": "./out/extension.js",
+	"browser": "./out/extension.js",
+	"extensionKind": [
+		"workspace",
+		"ui"
+	],
+	"icon": "icon.png",
+	"galleryBanner": {
+		"color": "#034063",
+		"theme": "dark"
+	},
+	"engines": {
+		"vscode": "^1.74.0"
+	},
+	"categories": [
+		"Visualization"
+	],
+	"keywords": [
+		"image",
+		"viewer",
+		"exr",
+		"hdr",
+		"exposure",
+		"png",
+		"jpg",
+		"bmp",
+		"gif"
+	],
+	"badges": [],
+	"preview": false,
+	"activationEvents": [
+		"onCommand:veriv.open",
+		"onCommand:veriv.open-dir-images",
+		"onCustomEditor:veriv.exr",
+		"onCustomEditor:veriv.hdr",
+		"onCustomEditor:veriv.png",
+		"onCustomEditor:veriv.jpeg",
+		"onCustomEditor:veriv.bmp",
+		"onCustomEditor:veriv.gif"
+	],
+	"contributes": {
+		"commands": [
+			{
+				"command": "veriv.open",
+				"title": "Open VERIV",
+				"category": "VERIV"
+			},
+			{
+				"command": "veriv.open-dir-images",
+				"title": "Open all images in directory with VERIV",
+				"category": "VERIV"
+			},
+			{
+				"command": "veriv.reload-all-images",
+				"title": "Reload all the images inside VERIV",
+				"category": "VERIV"
+			}
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"command": "veriv.open-dir-images"
+				}
+			],
+			"editor/title/context": [
+				{
+					"command": "veriv.open-dir-images"
+				}
+			]
+		},
+		"customEditors": [
+			{
+				"viewType": "veriv.exr",
+				"displayName": "VERIV (EXR) Preview",
+				"selector": [
+					{
+						"filenamePattern": "*.exr"
+					}
+				],
+				"priority": "default"
+			},
+			{
+				"viewType": "veriv.hdr",
+				"displayName": "VERIV (HDR) Preview",
+				"selector": [
+					{
+						"filenamePattern": "*.hdr"
+					}
+				],
+				"priority": "default"
+			},
+			{
+				"viewType": "veriv.png",
+				"displayName": "VERIV (PNG) Preview",
+				"selector": [
+					{
+						"filenamePattern": "*.png"
+					}
+				],
+				"priority": "default"
+			},
+			{
+				"viewType": "veriv.jpeg",
+				"displayName": "VERIV (JPEG) Preview",
+				"selector": [
+					{
+						"filenamePattern": "*.{jpg,jpeg}"
+					}
+				],
+				"priority": "default"
+			},
+			{
+				"viewType": "veriv.bmp",
+				"displayName": "VERIV (BMP) Preview",
+				"selector": [
+					{
+						"filenamePattern": "*.bmp"
+					}
+				],
+				"priority": "default"
+			},
+			{
+				"viewType": "veriv.gif",
+				"displayName": "VERIV (GIF) Preview",
+				"selector": [
+					{
+						"filenamePattern": "*.gif"
+					}
+				],
+				"priority": "default"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "VERIV",
+			"properties": {
+				"veriv.colormap": {
+					"type": "string",
+					"enum": [
+						"turbo",
+						"viridis",
+						"plasma",
+						"inferno",
+						"magma"
+					],
+					"markdownEnumDescriptions": [
+						"*Turbo* colormap",
+						"*Viridis* colormap",
+						"*Plasma* colormap",
+						"*Inferno* colormap",
+						"*Magma* colormap"
+					],
+					"enumItemLabels": [
+						"Turbo",
+						"Viridis",
+						"Plasma",
+						"Inferno",
+						"Magma"
+					],
+					"default": "turbo",
+					"description": "Choose the colormap to use when displaying the image with that formatting."
+				},
+				"veriv.interpolation": {
+					"type": "string",
+					"enum": [
+						"nearest",
+						"linear"
+					],
+					"markdownEnumDescriptions": [
+						"*Nearest* interpolation",
+						"*Linear* interpolation"
+					],
+					"enumItemLabels": [
+						"Nearest",
+						"Linear"
+					],
+					"default": "nearest",
+					"description": "Define the interpolation being used to display the images."
+				}
+			}
+		}
+	},
+	"scripts": {
+		"build-test": "webpack --mode=development",
+		"build": "webpack --mode=development && npm run inline",
+		"build-prod": "webpack --mode=production && npm run inline-prod",
+		"compile": "tsc -p ./",
+		"lint": "eslint . --ext .ts,.tsx",
+		"watch": "tsc -w -p ./",
+		"inline": "./bin/inline-cli.js ./dist ./out/extension.js",
+		"inline-prod": "./bin/inline-cli.js --prod ./dist ./out/extension.js",
+		"prepare": "./bin/prepare-cli.js .",
+		"package": "npm run build-prod && npm run prepare && cd build && ../node_modules/.bin/vsce package",
+		"clean": "rm -rf ./build && rm -rf ./out && rm -rf ./dist"
+	},
+	"devDependencies": {
+		"@monogrid/gainmap-js": "^3.1.0",
+		"@tweakpane/core": "^2.0.5",
+		"@types/node": "^12.12.0",
+		"@types/three": "^0.176.0",
+		"@types/vscode": "^1.74.0",
+		"@types/vscode-webview": "^1.57.0",
+		"@typescript-eslint/eslint-plugin": "^4.16.0",
+		"@typescript-eslint/parser": "^4.16.0",
+		"@vscode/vsce": "^3.5.0",
+		"css-minimizer-webpack-plugin": "^7.0.2",
+		"cssnano": "^7.0.7",
+		"eslint": "^7.21.0",
+		"esm": "^3.2.25",
+		"html-loader": "^3.0.1",
+		"tdigest": "^0.1.2",
+		"three": "^0.175.0",
+		"ts-loader": "^9.2.6",
+		"tweakpane": "^4.0.5",
+		"typescript": "^5.5.4",
+		"webpack": "^5.65.0",
+		"webpack-cli": "^4.9.1"
+	}
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>VERIV</title>
+</head>
+<body style="overflow: hidden; height: 100%; width: 100%; padding: 0 !important;"></body>
+	<script type="module" src="inline:viewer.js"></script>
+	<script type="module">
+		window.addEventListener("load", function(){
+			const vscode = acquireVsCodeApi();
+
+			window.onerror = (error) => {
+				vscode.postMessage({
+					command : 'error',
+					text : error.toString()
+				});
+			};
+
+			window.addEventListener('message', event => {
+				const message = event.data;
+				if (message.command === 'veriv.settings') {
+					window.viewer = window.Viewer.initViewer(
+						null,
+						vscode,
+						["replace:worker_prime"],
+						message.settings
+					);
+				}
+			});
+		});
+	</script>
+</body>

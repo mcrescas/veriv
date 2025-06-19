@@ -1,0 +1,30 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Run Extension",
+			"type": "extensionHost",
+			"request": "launch",
+			"runtimeExecutable": "${execPath}",
+			"args": [
+				"--disable-extensions",
+				"--extensionDevelopmentPath=${workspaceRoot}"
+			],
+			"sourceMaps": true,
+			"outFiles": ["${workspaceFolder}/out/**/*.js"],
+		},
+		{
+			"name": "Run Extension (Web)",
+			"type": "extensionHost",
+			"request": "launch",
+			"runtimeExecutable": "${execPath}",
+			"args": [
+				"--disable-extensions",
+				"--extensionDevelopmentPath=${workspaceRoot}",
+				"--extensionDevelopmentKind=web"
+			],
+			"sourceMaps": true,
+			"outFiles": ["${workspaceFolder}/out/**/*.js"],
+		}
+	]
+}
