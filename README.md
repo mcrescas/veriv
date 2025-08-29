@@ -40,6 +40,7 @@ Optimize your remote workflows with seamless support, eliminating file transfer 
 * **Image Reloading:** Refresh displayed images using the GUI, key bindings, or by executing the "Reload All" command.
 * **Flexible Animated Image Playback:** Play image sequences as videos with adjustable playback speed using customizable FPS settings.
 * **Efficient Folder Image Access:** Open all images within a directory directly from a right-click context menu.
+* **Save Edited Images:** Export the currently edited image — including error metric computations and other modifications — directly to a file or copy it to the clipboard.
 
 </br>
 

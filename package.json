@@ -2,7 +2,7 @@
 	"name": "veriv",
 	"displayName": "VERIV",
 	"description": "Visualize LDR & HDR images with zooming, dragging, exposure, pixel info, error metrics, and colormap controls.",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"publisher": "mcrespo",
 	"author": {
 		"email": "dev@mcrespo.me",
