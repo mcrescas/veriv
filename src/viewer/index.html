@@ -80,9 +80,9 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 
+	<div id="spinner" class="spinner" style="display: none;"></div>
 
 	<div id="modal_help" class="modal-window">
 		<div class="modal-div">
@@ -103,6 +103,9 @@
 			<p>
 			  For viewing the loaded images as a video, enter the desired number of frames per second (FPS), then press <em>Space</em> or click the play button. Pressing it again will toggle playback on or off.
 			</p>
+
+			  The extension also supports saving the currently displayed image (including modifications) to a file or copying it to the clipboard. You can do this using the standard keys or by checking the combinations in the table below.
+			</p>
 		  </div>
 
 		<div class="flex-container">
@@ -110,6 +113,24 @@
 				<center>
 				<table class="styled-table">
 					<caption>Keybindings</caption>
+					<tr>
+						<td>Copy image to clipboard</td>
+						<td>
+							<div class="key">
+								<span>Ctrl + C</span>
+								<span>Cmd + C</span>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>Save image to file</td>
+						<td>
+							<div class="key">
+								<span>Ctrl + S</span>
+								<span>Cmd + S</span>
+							</div>
+						</td>
+					</tr>
 					<tr>
 						<td>Toggle Sidebar</td>
 						<td>

@@ -10,6 +10,7 @@ import { Pane } from 'tweakpane';
 import { BindingApi, FolderApi, SliderInputBindingApi } from '@tweakpane/core';
 
 import { get_pixel_data, compute_metric, val2pos, format_number_stats } from './utils/pixel_utils';
+import { Saver } from './saver';
 
 /*
 	Import CSS into the bundle
@@ -144,6 +145,8 @@ export class Viewer {
 	focus_img_button = false;
 
 	expanded_to_sidebar = false;
+	image_saver !: Saver;
+	spinner !: HTMLElement;
 
 	constructor(document: Document, window: Window, root: HTMLElement, vscode: any, workers_path: string[], settings: Types.Settings) {
 		this.document = document;
@@ -196,6 +199,10 @@ export class Viewer {
 		
 		// Do the first update
 		this.render();
+		
+		// Initialize the saver utility
+		this.spinner = this.root.getElementById("spinner")!;
+		this.image_saver = new Saver(this.vscode, this.spinner);
 	}
 
 	create_virtual_dom() {
@@ -225,6 +232,7 @@ export class Viewer {
 		this.function_bindings['pointerup'] = this.pointerup.bind(this);
 		this.function_bindings['canvas_mouse_move'] = this.canvas_mouse_move.bind(this);
 		this.function_bindings['canvas_mouse_leave'] = this.canvas_mouse_leave.bind(this);
+		this.function_bindings['copy'] = this.copy_image.bind(this);
 	}
 
 	setup_elements_references() {
@@ -298,6 +306,7 @@ export class Viewer {
 			canvas_element.addEventListener('pointerup', this.function_bindings['pointerup']);
 			canvas_element.addEventListener('mousemove', this.function_bindings['canvas_mouse_move']);
 			canvas_element.addEventListener('mouseleave', this.function_bindings['canvas_mouse_leave']);
+			canvas_element.addEventListener('copy', this.function_bindings['copy']);
 		} else {
 			body_element.removeEventListener('keydown', this.function_bindings['key_input']);
 			body_element.removeEventListener('wheel', this.function_bindings['wheel_input']);
@@ -306,6 +315,7 @@ export class Viewer {
 			canvas_element.removeEventListener('pointerup', this.function_bindings['pointerup']);
 			canvas_element.removeEventListener('mousemove', this.function_bindings['canvas_mouse_move']);
 			canvas_element.removeEventListener('mouseleave', this.function_bindings['canvas_mouse_leave']);
+			canvas_element.removeEventListener('copy', this.function_bindings['copy']);
 		}
 	}
 
@@ -435,7 +445,7 @@ export class Viewer {
 
 		this.gui_open = true;
 		this.help_open = false;
-
+		
 		let video_button = this.root.getElementById("video_button")!;
 		video_button.addEventListener('click', this.toggle_video.bind(this), { passive: false });
 		video_button = this.root.getElementById("video_button-sidebar")!;
@@ -1400,7 +1410,7 @@ export class Viewer {
 				return;
 			}
 		}
-
+		
 		switch (e.key) {
 			case 'e':
 				this.params.Exposure += 0.5;
@@ -1439,8 +1449,23 @@ export class Viewer {
 				break;
 			case 'S':
 			case 's': {
-				this.settings.enableSidebar = !this.settings.enableSidebar;
-				this.setup_elements_references();
+				if (e.ctrlKey || e.metaKey) {
+					const [current_image, current_channel] = this.image_manager.get_current_image();
+					if (current_image !== null && current_channel !== null) {
+						// Present spinner in the UI
+						this.spinner.style.display = '';
+						const material = this.mesh.material as ShaderMaterial;						
+						this.image_saver.prepare(material, current_image.width, current_image.height);
+
+						const fileName = current_image.path.replace(/^.*[\\\/]/, '');
+						const fileNameNoExt = fileName.replace(/\.[^/.]+$/, "");
+						this.image_saver.save_to_file(decodeURIComponent(fileNameNoExt + '.png'));
+						return;
+					}
+				} else {
+					this.settings.enableSidebar = !this.settings.enableSidebar;
+					this.setup_elements_references();
+				}
 				break;
 			}
 			case 'D':
@@ -1495,6 +1520,23 @@ export class Viewer {
 				break;
 			case ' ':
 				this.toggle_video();
+				break;
+			case 'c':
+			case 'C':
+				if (e.ctrlKey || e.metaKey) {
+					const [current_image, current_channel] = this.image_manager.get_current_image();
+					if (current_image !== null && current_channel !== null) {
+						this.spinner.style.display = '';
+						const material = this.mesh.material as ShaderMaterial;
+						this.image_saver.prepare(material, current_image.width, current_image.height);
+						this.image_saver.copy_to_clipboard();
+
+						this.root.querySelector('body')!.focus();
+
+						return;
+					}
+				}
+				break;
 		}
 	
 		/*
@@ -1802,6 +1844,25 @@ export class Viewer {
 				this.window.dispatchEvent(new Event('resize'));
 			}
 		});
+	}
+	
+	copy_image(e: ClipboardEvent) {
+		if (e.clipboardData) {
+			const [current_image, current_channel] = this.image_manager.get_current_image();
+			if (current_image !== null && current_channel !== null) {
+				this.spinner.style.display = '';
+				const material = this.mesh.material as ShaderMaterial;
+				this.image_saver.prepare(material, current_image.width, current_image.height);
+				this.image_saver.copy_to_clipboard();
+
+				this.root.querySelector('body')!.focus();
+
+				e.preventDefault();
+				e.stopPropagation();
+				return false;
+			}
+		}
+		return true;
 	}
 }
 

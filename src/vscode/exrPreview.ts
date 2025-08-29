@@ -90,6 +90,28 @@ export class ExrPreview extends Disposable {
 						}
 						return;
 					}
+					case 'write_file': {
+						const data: Uint8Array = message.data;
+						const default_filename: string = message.default_filename || 'image.png';
+
+						let defaultUri: vscode.Uri;
+						const workspaceFolders = vscode.workspace.workspaceFolders;
+						if (workspaceFolders && workspaceFolders.length > 0) {
+							const workspaceUri = workspaceFolders[0].uri;
+							defaultUri = vscode.Uri.joinPath(workspaceUri, default_filename);
+						} else {
+							defaultUri = vscode.Uri.file(default_filename);
+						}
+
+						vscode.window.showSaveDialog({
+							defaultUri: defaultUri,
+							saveLabel: 'Save Image As (png)',
+						}).then((uri) => {
+							if (uri) {
+								vscode.workspace.fs.writeFile(uri, data);
+							}
+						});
+					}
 				}
 			})
 		);

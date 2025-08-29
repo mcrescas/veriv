@@ -672,6 +672,27 @@ input:not([type='checkbox']), textarea {
 	align-items: center;
 }
 
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.5);
+  border-left-color: #0078d4;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  position: fixed;
+  bottom: 40px;
+  right: 10px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .toggle-btn::before {
 	content: '';
 	display: inline-block;
